@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'SF_Movies.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'django',
-        'USER': 'django',
-        'PASSWORD': 'mypass',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'NAME': 'contrib_zhengxiz',
+        'USER': 'zhengxiz',
+        'PASSWORD': 'zhengxiong',
+        'HOST': 'contrib-postgres.club.cc.cmu.edu',   # Or an IP Address that your DB is hosted on
+        'PORT': '5432',
     }
 }
 
