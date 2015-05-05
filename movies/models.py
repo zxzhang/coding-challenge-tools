@@ -13,7 +13,7 @@ class UserInfo(models.Model):
     def get_userinfo(user):
         return UserInfo.objects.get(user=user)
     
-class movies(models.Model):
+class Movies(models.Model):
     title = models.CharField(max_length=100)
     release_year = models.CharField(max_length=50)
     location = models.CharField(max_length=200)
@@ -25,5 +25,17 @@ class movies(models.Model):
     actor1 = models.CharField(max_length=100)
     actor2 = models.CharField(max_length=100)
     actor3 = models.CharField(max_length=100)
+    latitude =  models.FloatField()
+    longitude = models.FloatField()
     def __unicode__(self):
-        return self.title + ' ' + self.location
+        return self.title + ': ' + self.location
+
+class Title(models.Model):
+    title = models.CharField(max_length=100, primary_key=True)
+    
+class Address(models.Model):
+    location = models.CharField(max_length=200, primary_key=True)
+
+class Company(models.Model):
+    production_company = models.CharField(max_length=100, primary_key=True)
+    

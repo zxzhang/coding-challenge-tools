@@ -1,0 +1,19 @@
+<movies>
+{% for movie in movies %}
+  <movie>
+      <title>{{movie.title}}</title>
+      <release_year>{{movie.release_year}}</release_year>
+      <location>{{movie.location}}</location>
+      <fun_facts>{{movie.fun_facts}}</fun_facts>
+      <production_company>{{movie.production_company}}</production_company>
+      <distributor>{{movie.distributor}}</distributor>
+      <director>{{movie.director}}</director>
+      <writer>{{movie.writer}}</writer>
+      <actor1>{{movie.actor1}}</actor1>
+      <actor2>{{movie.actor2}}</actor2>
+      <actor3>{{movie.actor3}}</actor3>
+      <lat>{{movie.latitude}}</lat>
+      <lng>{{movie.longitude}}</lng>
+  </movie>
+{% endfor %}
+</movies>

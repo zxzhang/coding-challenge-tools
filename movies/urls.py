@@ -11,4 +11,8 @@ from movies import mapViews
 
 urlpatterns = [
     url(r'^$', mapViews.index, name='index'),
+    url(r'^get-all-movies$', mapViews.getAllMovies),
+    url(r'^get-title$', mapViews.getTitle),
+    url(r'^get-address$', mapViews.getAddress),
+    url(r'^get-company$', mapViews.getCompany),
 ]

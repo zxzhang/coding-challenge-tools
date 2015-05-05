@@ -1,0 +1,29 @@
+{% extends "movies/base.html" %}
+{% block head %}
+Place search box
+{% endblock %}
+{% block style %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/searchbox.css' %}" />
+{% endblock %}
+{% block body %}
+<select id="select-input" name="select">
+<option value="title" selected="selected">movie</option>
+<option value="location">location</option>
+<option value="production_company">production company</option>
+</select>
+<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<button id="search" onclick="search()">search</button>
+<div id="map-canvas"></div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBq0cTHG8aKJfQz_BmOXy6290UD99vHr1w"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<script type="text/javascript" src="{% static 'movies/searchbox.js' %}"></script>
+<style>
+#target {
+	width: 345px;
+}
+</style>
+{% endblock %}
+

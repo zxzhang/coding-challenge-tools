@@ -5,6 +5,8 @@ Created on May 3, 2015
 '''
 #!/usr/bin/python
 import psycopg2
+import urllib2
+import xml.etree.ElementTree as ET
  
 def main():
     conn_string = "host='contrib-postgres.club.cc.cmu.edu' dbname='contrib_zhengxiz' user='zhengxiz' password='zhengxiong'"
@@ -20,9 +22,36 @@ def main():
     with open("data/Film_Locations_in_San_Francisco.csv", "r") as ins:
         for line in ins:
             title, release_year, location, fun_facts, production_company, distributor, director, writer, actor1, actor2, actor3 = line.split('|')
-            sql = "INSERT INTO movies_movies(title,release_year,location,fun_facts,production_company,distributor,director,writer,actor1,actor2,actor3) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" \
-                        % (title, release_year, location, fun_facts, production_company, distributor, director, writer, actor1, actor2, actor3)
+            address = location.replace(" ", "+")
+            address = address[1 : len(address) - 1] + ",+San+Francisco,+CA,+US"
+            url = "https://maps.googleapis.com/maps/api/geocode/xml?address=%s&key=AIzaSyBEt9ozY7CfiRk_RQRAo6c0cAvjjT1mK3Q" % address
+            file = urllib2.urlopen(url)
+            data = file.read()
+            file.close()
+            root = ET.fromstring(data)
+            child = root.find('result')
+            if not child:
+                print "!!!!!"
+                print address
+                continue
+            else:
+                child = child.find('geometry')
+                lat = child[0][0].text
+                lng = child[0][1].text
+            print lat + "\t" + lng
+            sql = "INSERT INTO movies_movies(title,release_year,location,fun_facts,production_company,distributor,director,writer,actor1,actor2,actor3,latitude,longitude) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" \
+                        % (title, release_year, location, fun_facts, production_company, distributor, director, writer, actor1, actor2, actor3, lat, lng)
             cursor.execute(sql)
+    conn.commit()
+    
+    sql = "INSERT INTO movies_title (title) SELECT DISTINCT(title) FROM movies_movies"
+    cursor.execute(sql)
+    conn.commit()
+    sql = "INSERT INTO movies_address (location) SELECT DISTINCT(location) FROM movies_movies"
+    cursor.execute(sql)
+    conn.commit()
+    sql = "INSERT INTO movies_company (production_company) SELECT DISTINCT(production_company) FROM movies_movies" 
+    cursor.execute(sql)
     conn.commit()
     # execute our Query
     # cursor.execute("SELECT * FROM movies_movies")
