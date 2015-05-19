@@ -1,7 +1,26 @@
-li a {
-	color: green;
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px
 }
 
 body {
-	background: white url("images/background.jpg") no-repeat right bottom;
+    background: url("images/background.jpg");
 }
+
+.margin {
+	margin-top: 10px;}
+
+div .line {
+	display: inline-block;
+}
+
+div .line #box {
+	width: 500px;
+}
+
+div .line #btn {
+	width: 100px;
+}
+
+

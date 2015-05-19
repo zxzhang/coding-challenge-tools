@@ -5,25 +5,37 @@ Place search box
 {% block style %}
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'movies/searchbox.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'movies/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'movies/bootstrap-theme.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'movies/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 {% endblock %}
 {% block body %}
-<select id="select-input" name="select">
-<option value="title" selected="selected">movie</option>
-<option value="location">location</option>
-<option value="production_company">production company</option>
-</select>
-<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-<button id="search" onclick="search()">search</button>
-<div id="map-canvas"></div>
+<div class="form-group center margin">
+	<div class="line" id="btn">
+		<select id="select-input" class="form-control" name="select">
+			<option id="title" href="{% url 'title' %}" value="title" selected="selected">movie</option>
+			<option id="address" href="{% url 'address' %}" value="location">location</option>
+			<option id="company" href="{% url 'company' %}" value="production_company">production company</option>
+		</select>
+	</div>
+	<div class="line" id="box">
+		<input id="pac-input" class="form-control" type="text" placeholder="Search">
+	</div>
+	<div class="line" id="btn">
+		<button id="search" onclick="search()" href="{% url 'search' %}" class="btn btn-default">search</button>
+	</div>
+</div>
+{% csrf_token %}
+<div id="map-canvas" style="height:90%;width:90%;margin:0 auto;"></div>
 {% endblock %}
 {% block script %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBq0cTHG8aKJfQz_BmOXy6290UD99vHr1w"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 <script type="text/javascript" src="{% static 'movies/searchbox.js' %}"></script>
-<style>
-#target {
-	width: 345px;
-}
-</style>
+<script type="text/javascript" src="{% static 'movies/enter.js' %}"></script>
+<script type="text/javascript" src="{% static 'movies/autocomplete.js' %}"></script>
 {% endblock %}
 

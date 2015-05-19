@@ -18,39 +18,40 @@ def main():
  
     # conn.cursor will return a cursor object, you can use this cursor to perform queries
     cursor = conn.cursor()
-    
+
     with open("data/Film_Locations_in_San_Francisco.csv", "r") as ins:
         for line in ins:
             title, release_year, location, fun_facts, production_company, distributor, director, writer, actor1, actor2, actor3 = line.split('|')
             address = location.replace(" ", "+")
             address = address[1 : len(address) - 1] + ",+San+Francisco,+CA,+US"
             url = "https://maps.googleapis.com/maps/api/geocode/xml?address=%s&key=AIzaSyBEt9ozY7CfiRk_RQRAo6c0cAvjjT1mK3Q" % address
-            file = urllib2.urlopen(url)
-            data = file.read()
-            file.close()
+            fileToRead = urllib2.urlopen(url)
+            data = fileToRead.read()
+            fileToRead.close()
             root = ET.fromstring(data)
             child = root.find('result')
             if not child:
-                print "!!!!!"
-                print address
                 continue
-            else:
-                child = child.find('geometry')
-                lat = child[0][0].text
-                lng = child[0][1].text
-            print lat + "\t" + lng
-            sql = "INSERT INTO movies_movies(title,release_year,location,fun_facts,production_company,distributor,director,writer,actor1,actor2,actor3,latitude,longitude) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" \
+            child = child.find('geometry')
+            lat = child[0][0].text
+            lng = child[0][1].text
+            la, ln = float(lat), float(lng)
+            if la < 37.697485 or la > 37.813662:
+                continue
+            if ln < -122.533645 or ln > -122.345504:
+                continue
+            sql = "INSERT INTO movies_movie(title,release_year,location,fun_facts,production_company,distributor,director,writer,actor1,actor2,actor3,latitude,longitude) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" \
                         % (title, release_year, location, fun_facts, production_company, distributor, director, writer, actor1, actor2, actor3, lat, lng)
             cursor.execute(sql)
     conn.commit()
-    
-    sql = "INSERT INTO movies_title (title) SELECT DISTINCT(title) FROM movies_movies"
+
+    sql = "INSERT INTO movies_title (title) SELECT DISTINCT(title) FROM movies_movie"
     cursor.execute(sql)
     conn.commit()
-    sql = "INSERT INTO movies_address (location) SELECT DISTINCT(location) FROM movies_movies"
+    sql = "INSERT INTO movies_address (location) SELECT DISTINCT(location) FROM movies_movie"
     cursor.execute(sql)
     conn.commit()
-    sql = "INSERT INTO movies_company (production_company) SELECT DISTINCT(production_company) FROM movies_movies" 
+    sql = "INSERT INTO movies_company (production_company) SELECT DISTINCT(production_company) FROM movies_movie" 
     cursor.execute(sql)
     conn.commit()
     # execute our Query
