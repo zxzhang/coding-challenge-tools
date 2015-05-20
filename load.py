@@ -7,11 +7,12 @@ Created on May 3, 2015
 import psycopg2
 import urllib2
 import xml.etree.ElementTree as ET
+from SF_Movies.settings import DATABASES
  
 def main():
-    conn_string = "host='contrib-postgres.club.cc.cmu.edu' dbname='contrib_zhengxiz' user='zhengxiz' password='zhengxiong'"
+    conn_string = "host='" + DATABASES['default']['HOST'] + "' dbname='" + DATABASES['default']["NAME"] + "' user='" + DATABASES['default']["USER"] + "' password='" + DATABASES['default']["PASSWORD"] + "'"
     # print the connection string we will use to connect
-    # print "Connecting to database\n    ->%s" % (conn_string)
+    print "Connecting to database\n    ->%s" % (conn_string)
  
     # get a connection, if a connect cannot be made an exception will be raised here
     conn = psycopg2.connect(conn_string)
@@ -30,7 +31,7 @@ def main():
             fileToRead.close()
             root = ET.fromstring(data)
             child = root.find('result')
-            if not child:
+            if child is None or len(child) == 0:
                 continue
             child = child.find('geometry')
             lat = child[0][0].text

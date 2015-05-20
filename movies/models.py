@@ -1,18 +1,7 @@
 from django.db import models
 # from datetime import datetime
 # User class for built-in authentication module
-from django.contrib.auth.models import User
 
-class UserInfo(models.Model):
-    user = models.OneToOneField(User, primary_key=True)
-    gender = models.CharField(max_length=30, blank=True)
-    picture = models.ImageField(upload_to="profile-photos", default='profile-photos/default.jpg', blank=True) 
-    def __unicode__(self):
-        return self.firstName+' '+self.lastName
-    @staticmethod
-    def get_userinfo(user):
-        return UserInfo.objects.get(user=user)
-    
 class Movie(models.Model):
     title = models.CharField(db_index=True, max_length=100)
     release_year = models.CharField(max_length=50)

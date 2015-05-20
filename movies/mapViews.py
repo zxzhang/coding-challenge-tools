@@ -8,9 +8,11 @@ from django.http import JsonResponse
 def index(request):
     return render(request, 'movies/searchbox.html', {})
     
+'''
 def getAllMovies(request):
     context = {'movies' : Movie.objects.all()}
     return render(request, 'movies/movies.xml', context, content_type='application/xml');
+'''
 
 def getTitle(request):
     titles = []

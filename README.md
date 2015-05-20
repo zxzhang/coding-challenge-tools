@@ -1,58 +1,60 @@
-Coding challenge or existing code?
-==================================
-
-The [coding challenge](coding_challenge.md) is optional if you already have
-some code that you're proud of and can share with us.
-
 Existing code
--------------
+---------------------------------------------------------------
+There is no existing code in the project. I wrote all the code.
+---------------------------------------------------------------
 
-If you have existing code, please follow the following guidelines:
+* How to set up the project
 
-* Include a link to the hosted repository (e.g. Github, Bitbucket...). We cannot
-  review archives or single files.
-* The repo should include a README that follows the [principles described
-  below](#readme) In particular, please make sure to include high-level
-  explanation about what the code is doing.
-* Ideally, the code you're providing:
-  * Has been written by you alone. If not, please tell us which part you wrote
-    and are most proud of in the README.
-  * Is leveraging web technologies.
-  * Is deployed and hosted somewhere.
+  I used the remote database server. So, you do not need to do "python manage.py migrate".
 
-Readme
-------
-
-Regardless of whether it's your own code or our coding challenge, write your
-README as if it was for a production service. Include the following items:
+  You just need to make sure your laptop can use Django to connect to remote Postgre database server.
+  Then, run "python manage.py runserver". That is it.
 
 * Description of the problem and solution.
+
+  --SF Movies--
+
+  Create a service that shows on a map where movies have been filmed in San
+  Francisco. The user should be able to filter the view using autocompletion
+  search.
+
+  The data is available on [DataSF](http://www.datasf.org/): [Film
+  Locations](https://data.sfgov.org/Arts-Culture-and-Recreation-/Film-Locations-in-San-Francisco/yitu-d5am).
+
+  I chose the PostgreSQL database in Carnegie Mellon University as the database server. The database configurtion is that:
+  DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+          'NAME': 'contrib_zhengxiz',
+          'USER': 'zhengxiz',
+          'PASSWORD': 'zhengxiong',
+          'HOST': 'contrib-postgres.club.cc.cmu.edu',   # Or an IP Address that your DB is hosted on
+          'PORT': '5432',
+      }
+  }
+
+  I used Django and Google Map API to implement a web application to show all the movies in the given data set on the map. I finished 
+  the autocomplete and search feature using Ajax. The web server will provide json or xml data for given movie, position or company. Then,
+  browser can use javascript to send POST request to server to sychronize the Marker and Infowindow on the map.
+
 * Whether the solution focuses on back-end, front-end or if it's full stack.
+
+  My solution focuses on back-end, e.g. how the server provide the data and browser use ajax to synchronize it on the map.
+
 * Reasoning behind your technical choices, including architectural. Trade-offs
   you might have made, anything you left out, or what you might do differently
   if you were to spend additional time on the project.
+
+  If I have more time, I will do something like ngrams to make the autocomplete better. Also, I can build users registration and login system, so that
+  users can add "like" movie into his favourite list. Also, I can add route in the map. 
+
 * Link to other code you're particularly proud of.
+
+  https://github.com/zxzhang/MapReduceFacility
+  https://github.com/zxzhang/Introduction-To-Computer-System
+
 * Link to your resume or public profile.
-* Link to to the hosted application where applicable.
 
-How we review
--------------
+  https://www.linkedin.com/in/zhengxiongz
 
-Your application will be reviewed by at least three of our engineers. The
-aspects of your code we will judge include:
 
-* Clarity: does the README clearly explains the problem and solution?
-* Correctness: does the application do what was asked? If there is anything
-  missing, does the README explain why it is missing?
-* Code quality: is the code simple, easy to understand, and maintainable?  Are
-  there any code smells or other red flags?
-* Testing: how thorough are the automated tests? Will they be difficult to
-  change if the requirements of the application were to change?
-* UX: is the web interface understandable and pleasing to use?
-* Technical choices: do choices of libraries, databases, architecture etc. seem
-  appropriate for the chosen application?
-
-Coding Challenge
-----------------
-
-[Guidelines can be found here.](coding_challenge.md)
