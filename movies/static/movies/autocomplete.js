@@ -1,3 +1,4 @@
+// autocomplete, ajax sychronize json data, method: post
 $(function() {
 	$( "#pac-input" ).autocomplete({
 		source: function( request, response ) {

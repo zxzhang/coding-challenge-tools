@@ -19,6 +19,7 @@ class Movie(models.Model):
     def __unicode__(self):
         return self.title + ': ' + self.location
 
+# make the autocomplete faster, build its own model
 class Title(models.Model):
     title = models.CharField(max_length=100, primary_key=True)
     def __unicode__(self):

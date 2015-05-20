@@ -1,6 +1,5 @@
-Existing code
 ---------------------------------------------------------------
-There is no existing code in the project. I wrote all the code.
+Existing code: There is no existing code in the project. I wrote all the code.
 ---------------------------------------------------------------
 
 * How to set up the project
@@ -9,6 +8,10 @@ There is no existing code in the project. I wrote all the code.
 
   You just need to make sure your laptop can use Django to connect to remote Postgre database server.
   Then, run "python manage.py runserver". That is it.
+
+  If you want to set the database, you can use "python manage.py migrate" first. Then run "python load.py" to load the data into database.
+
+  You can use admin to view the data. One user is "admin" and password is "password".
 
 * Description of the problem and solution.
 

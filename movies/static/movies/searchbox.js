@@ -6,12 +6,12 @@ var map;
 var myLatlng;
 
 function search() {
-  // document.getElementById("search").style.color = "red";
   var search = document.getElementById("search");
   var url = search.attributes.href.nodeValue;
   var content = document.getElementById("select-input").value;
   var term = document.getElementById("pac-input").value;
   var csrf = document.getElementsByName("csrfmiddlewaretoken");
+  // using ajax to get the search result and draw the marker on the map
   $.ajax({
     type: "POST",
     url: url,
@@ -26,7 +26,7 @@ function search() {
 }
 
 function search_success(data, textStatus, jqXHR){
-    // find the comment to update
+    // parse the xml data and update the marker and infowindow
     var places = [];
     comments = [];
     var xmlDoc = $.parseXML(data);
@@ -69,6 +69,7 @@ function search_success(data, textStatus, jqXHR){
   for (var i = 0, place; place = places[i]; i++) {
     var latLng = new google.maps.LatLng(place.lat, place.lng);
 
+    // update the marker
     var marker = new google.maps.Marker({
       map: map,
       title: place.title,
@@ -76,6 +77,7 @@ function search_success(data, textStatus, jqXHR){
     });
 
     google.maps.event.addListener(marker, 'click', function() {
+      // update the info window
       var pos = markers.indexOf(this);
       infowindow.setContent(comments[pos]);
       infowindow.open(map, this);
@@ -88,7 +90,6 @@ function search_success(data, textStatus, jqXHR){
 
 function initialize() {
   myLatlng = new google.maps.LatLng(37.7749295, -122.4194155);
-
   infowindow = new google.maps.InfoWindow({
       content: ""
   });

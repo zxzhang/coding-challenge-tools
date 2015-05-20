@@ -5,11 +5,18 @@
 }
 
 body {
-    background: url("images/background.jpg");
+	background: url("images/background.jpg");
 }
 
 .margin {
-	margin-top: 10px;}
+	margin-top: 15px;
+}
+
+#map-canvas {
+	height: 90%;
+	width: 90%;
+	margin: 0 auto;
+}
 
 div .line {
 	display: inline-block;
@@ -21,6 +28,10 @@ div .line #box {
 
 div .line #btn {
 	width: 100px;
+}
+
+h1 {
+	font-family: "Times New Roman", Times, serif;
 }
 
 

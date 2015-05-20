@@ -5,6 +5,7 @@ from models import Address
 from models import Company
 from django.http import JsonResponse
 
+# main google map and search box page
 def index(request):
     return render(request, 'movies/searchbox.html', {})
     
@@ -14,6 +15,7 @@ def getAllMovies(request):
     return render(request, 'movies/movies.xml', context, content_type='application/xml');
 '''
 
+# get the movies through the title
 def getTitle(request):
     titles = []
     if request.method == 'POST' and request.is_ajax():
@@ -22,6 +24,7 @@ def getTitle(request):
             titles = [item.title for item in items]
     return JsonResponse(titles, safe=False)
 
+# get the movies through the address
 def getAddress(request):
     addresses = []
     if request.method == 'POST' and request.is_ajax():
@@ -30,6 +33,7 @@ def getAddress(request):
             addresses = [item.location for item in items]
     return JsonResponse(addresses, safe=False)
 
+# get the movies through the company
 def getCompany(request):
     companies = []
     if request.method == 'POST' and request.is_ajax():
@@ -38,6 +42,7 @@ def getCompany(request):
             companies = [item.production_company for item in items]
     return JsonResponse(companies, safe=False)
 
+# get the search result data
 def search(request):
     print request
     context = {}
